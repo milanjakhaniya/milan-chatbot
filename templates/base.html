@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Chatbot</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+
+    {% comment %} <style>
+        body {
+            background-color:#a2a8d3;
+        }
+        #user-input {
+            overflow: hidden; 
+        }
+        
+        .img {
+            width: -webkit-fill-available;
+        }
+
+        .card {
+            margin: 0;
+        }
+    
+        .card-body {
+            padding: 0.50rem; 
+        }
+    
+        #user-input input {
+            border-radius: 5px;
+        }
+    
+        #user-input button {
+            border-radius: 5px;
+        }
+    </style> {% endcomment %}
+</head>
+<body>
+    <div style="text-align: end;margin: 5px;">
+        <button onclick="logoutUser()" class="btn btn-danger ">Logout</button>
+    </div>
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function logoutUser() {
+            fetch('/logout/', { method: 'GET' })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;  // Redirect to the URL set in the logout view
+                    } else {
+                        alert("Logout failed. Please try again.");
+                    }
+                })
+                .catch(error => console.error('Logout error:', error));
+        }
+        </script>
+</body>
+</html>
